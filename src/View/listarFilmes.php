@@ -1,5 +1,5 @@
 <?php
-include_once("../Cabeçalho/cabecalho.html");
+include_once("../Assets/header.html");
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ include_once("../Cabeçalho/cabecalho.html");
         <?php ?>
         <table>
       
-<h2><a href="../Controller/logooff.php">Sair</a></h2>
+<h2><a href="../Controller/logout.php">Sair</a></h2>
 </body>
 
 </html>

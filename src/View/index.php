@@ -11,7 +11,7 @@ if (isset($_SESSION['usuario'])) {
 <html lang="pt-br">
 
 <head>
-    <?php include "../Cabeçalho/cabecalho.html"; ?>
+    <?php include "../Assets/header.html"; ?>
     <title>Login</title>
 </head>
 
@@ -23,6 +23,13 @@ if (isset($_SESSION['usuario'])) {
         echo '
         <div class="alert alert-danger">
             <p>' . urldecode($_GET['err']) . '</p>
+        </div>
+        <hr/>
+        ';
+    if (isset($_GET['success']))
+        echo '
+        <div class="alert alert-success">
+            <p>' . urldecode($_GET['success']) . '</p>
         </div>
         <hr/>
         ';

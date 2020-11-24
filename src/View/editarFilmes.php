@@ -1,4 +1,4 @@
-<?php include_once("../Cabeçalho/cabecalho.html")?>
+<?php include_once("../Assets/header.html") ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -36,7 +36,7 @@
             </br><input type="submit" name="" value="Editar" class="btn btn-danger">
         </form>
     </center>
-    <h2><a href="../Controller/logooff.php">Sair</a></h2>
+    <h2><a href="../Controller/logout.php">Sair</a></h2>
 </body>
 
 </html>
