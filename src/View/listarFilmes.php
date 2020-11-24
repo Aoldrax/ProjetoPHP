@@ -37,7 +37,7 @@ include_once("../Cabeçalho/cabecalho.html");
         <?php ?>
         <table>
       
-<h2><a href="../Controll/logooff.php">Sair</a></h2>
+<h2><a href="../Controller/logooff.php">Sair</a></h2>
 </body>
 
 </html>
