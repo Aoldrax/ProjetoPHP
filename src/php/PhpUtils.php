@@ -36,6 +36,11 @@ final class PhpUtils
         header("Location:$ref?$var=$val");
     }
 
+    public function onRawIndexEmpty(string $ref): void
+    {
+        header("Location:$ref");
+    }
+
     public function onRawIndexOk(string $msg, string $ref): void
     {
         self::onRawRedirect($msg, $ref, "success");

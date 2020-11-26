@@ -17,7 +17,8 @@ include "../dao/UsuarioDAO.php";
 
 final class UsuarioController implements IController
 {
-    private const REF_ERR = "../view/";
+    private const REF_INDEX = "../view/";
+    private const REF_AUTH = "../view/home";
 
     private static $singleton, $utils;
 
@@ -36,30 +37,45 @@ final class UsuarioController implements IController
     public function handler(array $args): void
     {
         if (!array_key_exists("action", $args)) {
-            self::$utils->onRawIndexErr("Action <strong>não</strong> definida!", self::REF_ERR);
+            self::$utils->onRawIndexErr("Action <strong>não</strong> definida!", self::REF_INDEX);
             return;
         }
 
         switch (($action = $args["action"])) {
             default:
-                self::$utils->onRawIndexErr("Action '<strong>" . $action . "</strong>' não implementada!", self::REF_ERR);
+                self::$utils->onRawIndexErr("Action '<strong>" . $action . "</strong>' não implementada!", self::REF_INDEX);
                 break;
             case "login":
-                $nome = self::$utils->tryGetValue($args, "nome");
-                $senha = self::$utils->tryGetValue($args, "senha");
-                if (self::$utils->isNullOrEmpty($nome) || self::$utils->isNullOrEmpty($senha)) {
-                    self::$utils->onRawIndexErr("<strong>Nome</strong> ou <strong>Senha</strong> inválidos!", self::REF_ERR);
-                    return;
-                }
-
-                $this->autenticarUsuario($nome, $senha);
+                $this->autenticarUsuario($args);
+                break;
+            case "logout":
+                $this->logoutUsuario();
                 break;
         }
     }
 
-    public function autenticarUsuario(string $nome, string $senha): void
+    public function autenticarUsuario(array $args): void
     {
-        $dao = UsuarioDAO::getSingleton();
-        $dao->verificarCadastro($nome, $senha);
+        if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nome")))
+            || self::$utils->isNullOrEmpty(($senha = self::$utils->tryGetValue($args, "senha")))
+            || !UsuarioDAO::getSingleton()->verificarCadastro($nome, $senha)) {
+            self::$utils->onRawIndexErr("<strong>Nome</strong> ou <strong>Senha</strong> inválidos!", self::REF_INDEX);
+            return;
+        } else {
+            session_start();
+
+            $_SESSION["usuario"] = $nome;
+            $_SESSION["senha"] = $senha;
+
+            self::$utils->onRawIndexEmpty(self::REF_AUTH);
+        }
+    }
+
+    public function logoutUsuario(): void
+    {
+        session_start();
+        session_destroy();
+
+        self::$utils->onRawIndexOk("Logout efetuado com sucesso!", self::REF_INDEX);
     }
 }

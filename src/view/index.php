@@ -42,8 +42,8 @@ if (isset($_SESSION['usuario'])) {
             <input type="hidden" name="controller" value="usuario"/>
             <input type="hidden" name="action" value="login"/>
             <div class="form-group">
-                <label for="usuario">Usuário</label>
-                <input type="text" name="usuario" placeholder="insira seu nome de usuário">
+                <label for="nome">Usuário</label>
+                <input type="text" name="nome" placeholder="insira seu nome de usuário">
             </div>
             <div class="form-group">
                 <label for="senha">Senha</label>
