@@ -46,12 +46,12 @@ final class PhpUtils
         return preg_match(self::$php_injection_regex_pattern, $str);
     }
 
-    public function tryGetValue(array $collection, string $key): ?mixed
+    public function tryGetValue(array $collection, string $key)
     {
         return array_key_exists($key, $collection) ? $collection[$key] : null;
     }
 
-    public function isNullOrEmpty(string $value): bool
+    public function isNullOrEmpty(?string $value): bool
     {
         return $value === null || $value === "";
     }
