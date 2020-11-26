@@ -6,7 +6,7 @@
  * Time: 16:37
  */
 
-namespace Db;
+namespace dao\db;
 
 final class SQLQuery
 {

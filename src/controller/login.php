@@ -6,7 +6,7 @@ if (($usr = $_POST['usuario']) === null || ($pass = $_POST['senha']) === null) {
 
 include '../db/DbUtils.php';
 
-use Db\DbUtils;
+use db\DbUtils;
 
 $db = DbUtils::getSingleton();
 if ($db->containsUsr($usr, $pass)) {

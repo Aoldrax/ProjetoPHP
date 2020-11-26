@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: devwarlt
- * Date: 24/11/2020
- * Time: 16:42
+ * Date: 26/11/2020
+ * Time: 16:41
  */
 
-namespace dao\db;
+namespace dao;
 
-include "SQLQuery.php";
-include "MySQLDatabase.php";
+use dao\db\MySQLDatabase;
+use dao\db\SQLQuery;
 
-final class DbUtils
+final class UsuarioDAO
 {
     private static $singleton;
 
@@ -19,22 +19,22 @@ final class DbUtils
     {
     }
 
-    public static function getSingleton(): DbUtils
+    public static function getSingleton(): UsuarioDAO
     {
         if (self::$singleton === null)
-            self::$singleton = new DbUtils();
+            self::$singleton = new UsuarioDAO();
         return self::$singleton;
     }
 
-    public function containsUsr(string $usr, string $pass): bool
+    public function verificarCadastro(string $nome, string $senha): bool
     {
         $mysql = MySQLDatabase::getSingleton();
         $result = $mysql->select(
             new SQLQuery(
-                "SELECT COUNT(`id`) as `count` FROM `usuario` WHERE `usuario` = ':usuario' AND `senha` = ':senha'",
+                "SELECT COUNT(`id`) AS `count` FROM `usuario` WHERE `usuario` = ':usuario' AND `senha` = ':senha'",
                 [
-                    ":usuario" => $usr,
-                    ":senha" => $pass
+                    ":usuario" => $nome,
+                    ":senha" => $senha
                 ]
             )
         );

@@ -6,7 +6,7 @@
  * Time: 16:36
  */
 
-namespace Db;
+namespace dao\db;
 
 define("DB_HOST", "localhost");
 define("DB_SCHEMA", "cartaovip");

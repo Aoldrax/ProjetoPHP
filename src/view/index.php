@@ -37,8 +37,9 @@ if (isset($_SESSION['usuario'])) {
     <div class="login">
         <h1 align="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">
             Login</h1>
-        <form action="../controller/login.php" method="POST" style="background-color: #fff; height: 300px; width:380px;"
+        <form action="../php/MVCRouter.php" method="post" style="background-color: #fff; height: 300px; width:380px;"
               class="rounded">
+            <input type="hidden" name="controller" value="usuario"/>
             <div class="form-group">
                 <label for="usuario">Usuário</label>
                 <input type="text" name="usuario" placeholder="insira seu nome de usuário">
@@ -48,7 +49,7 @@ if (isset($_SESSION['usuario'])) {
                 <input type="password" name="senha" placeholder="Insira sua senha">
             </div>
             <input type="submit" name="logar" value="Login"><br>
-            <a href="/cadastroUsuarios">Ainda não se cadastrou?</a>
+            <a href="cadastroUsuarios">Ainda não se cadastrou?</a>
         </form>
     </div>
 </center>
