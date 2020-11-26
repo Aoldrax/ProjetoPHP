@@ -38,11 +38,21 @@ final class PhpUtils
 
     public function onRawIndexOk(string $msg, string $ref): void
     {
-        self::onRawRedirect($msg, $ref, "ok");
+        self::onRawRedirect($msg, $ref, "success");
     }
 
     public function checkPhpInjection(string $str): bool
     {
         return preg_match(self::$php_injection_regex_pattern, $str);
+    }
+
+    public function tryGetValue(array $collection, string $key): ?mixed
+    {
+        return array_key_exists($key, $collection) ? $collection[$key] : null;
+    }
+
+    public function isNullOrEmpty(string $value): bool
+    {
+        return $value === null || $value === "";
     }
 }

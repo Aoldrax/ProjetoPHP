@@ -40,6 +40,7 @@ if (isset($_SESSION['usuario'])) {
         <form action="../php/MVCRouter.php" method="post" style="background-color: #fff; height: 300px; width:380px;"
               class="rounded">
             <input type="hidden" name="controller" value="usuario"/>
+            <input type="hidden" name="action" value="login"/>
             <div class="form-group">
                 <label for="usuario">Usuário</label>
                 <input type="text" name="usuario" placeholder="insira seu nome de usuário">

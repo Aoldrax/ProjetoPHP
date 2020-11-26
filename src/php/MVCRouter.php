@@ -26,4 +26,4 @@ $manager = ControllerManager::getSingleton();
 if ($manager->controllerExists($controller))
     $manager->handler($controller, $_POST);
 else
-    $utils->onRawIndexErr("Controlador '" . $controller . "' indefinido!", $errRef);
+    $utils->onRawIndexErr("Controlador '<strong>" . $controller . "</strong>' indefinido!", $errRef);
