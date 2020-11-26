@@ -1,4 +1,4 @@
-<?php include_once("../Assets/header.html") ?>
+<?php include_once("../assets/header.html") ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 

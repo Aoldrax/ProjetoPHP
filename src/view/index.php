@@ -11,7 +11,7 @@ if (isset($_SESSION['usuario'])) {
 <html lang="pt-br">
 
 <head>
-    <?php include "../Assets/header.html"; ?>
+    <?php include "../assets/header.html"; ?>
     <title>Login</title>
 </head>
 
@@ -37,7 +37,7 @@ if (isset($_SESSION['usuario'])) {
     <div class="login">
         <h1 align="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">
             Login</h1>
-        <form action="../Controller/login.php" method="POST" style="background-color: #fff; height: 300px; width:380px;"
+        <form action="../controller/login.php" method="POST" style="background-color: #fff; height: 300px; width:380px;"
               class="rounded">
             <div class="form-group">
                 <label for="usuario">Usuário</label>

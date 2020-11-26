@@ -1,10 +1,10 @@
 <?php
 if (($usr = $_POST['usuario']) === null || ($pass = $_POST['senha']) === null) {
-    header("Location: ../View/");
+    header("Location: ../view/");
     return;
 }
 
-include '../Db/DbUtils.php';
+include '../db/DbUtils.php';
 
 use Db\DbUtils;
 
@@ -15,7 +15,7 @@ if ($db->containsUsr($usr, $pass)) {
     $_SESSION['usuario'] = $usr;
     $_SESSION['senha'] = $pass;
 
-    header("Location: ../View/home");
+    header("Location: ../view/home");
 } else
-    header("Location: ../View/?err=" . urlencode("<b>Usuário</b> ou <b>Senha</b> inválida!"));
+    header("Location: ../view/?err=" . urlencode("<b>Usuário</b> ou <b>Senha</b> inválida!"));
 ?>

@@ -1,5 +1,5 @@
 <?php
-include_once("../Assets/header.html");
+include_once("../assets/header.html");
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ include_once("../Assets/header.html");
         <?php ?>
         <table>
       
-<h2><a href="../Controller/logout.php">Sair</a></h2>
+<h2><a href="../controller/logout.php">Sair</a></h2>
 </body>
 
 </html>
