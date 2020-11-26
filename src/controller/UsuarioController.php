@@ -47,6 +47,11 @@ final class UsuarioController implements IController
             case "login":
                 $nome = self::$utils->tryGetValue($args, "nome");
                 $senha = self::$utils->tryGetValue($args, "senha");
+                if (self::$utils->isNullOrEmpty($nome) || self::$utils->isNullOrEmpty($senha)) {
+                    self::$utils->onRawIndexErr("<strong>Nome</strong> ou <strong>Senha</strong> inválidos!", self::REF_ERR);
+                    return;
+                }
+
                 $this->autenticarUsuario($nome, $senha);
                 break;
         }
@@ -54,11 +59,6 @@ final class UsuarioController implements IController
 
     public function autenticarUsuario(string $nome, string $senha): void
     {
-        if (self::$utils->isNullOrEmpty($nome) || self::$utils->isNullOrEmpty($senha)) {
-            self::$utils->onRawIndexErr("<strong>Nome</strong> ou <strong>Senha</strong> inválidos!", self::REF_ERR);
-            return;
-        }
-
         $dao = UsuarioDAO::getSingleton();
         $dao->verificarCadastro($nome, $senha);
     }
