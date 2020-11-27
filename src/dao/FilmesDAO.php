@@ -25,7 +25,7 @@ final class FilmesDAO
         $mysql = MySQLDatabase::getSingleton();
         $result = $mysql->insert(
             new SQLQuery(
-                "INSERT INTO `filmes` (id, nome=':nome', duracao=':duracao', nome_diretor=':nome_diretor', data_lançamento=':data_lançamento', usuario_id=':usuario-id') values(null,'{$nome}', '{$duracao}', '{$nome_diretor}', '{$data_lançamento}', '{$usuario_id}')",
+                "INSERT INTO `filmes` (id, nome, duracao, nome_diretor, data_lançamento, usuario_id) values(null,':nome', ':duracao', ':nome-diretor', ':data_lançamento', ':usuario_id'",
                 [
                     ":nome" => $nome,
                     ":duracao" => $duracao,

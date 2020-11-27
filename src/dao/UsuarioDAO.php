@@ -10,6 +10,7 @@ namespace dao;
 
 use dao\db\MySQLDatabase;
 use dao\db\SQLQuery;
+use PDO;
 
 final class UsuarioDAO
 {
@@ -41,7 +42,32 @@ final class UsuarioDAO
         if ($result === null)
             return false;
 
-        $data = $result->fetch(\PDO::FETCH_OBJ);
+        $data = $result->fetch(PDO::FETCH_OBJ);
         return $data->count > 0;
+    }
+
+    public function cadastrarUsuario(int $id, string $nome, string $usuario, string $cpf, string $celular, string $senha, string $confir_senha, string $email, string $data_nascimento, string $estado, string $cidade, string $numerodocartao, int $codigocartao, string $validadecartao): bool
+    {
+        $mysql = MySQLDatabase::getSingleton();
+        $result = $mysql->insert(
+            new SQLQuery(
+                "INSERT INTO usuarios (id, nome, usuario, cpf, celular, senha, confir_senha, email, data_nascimento, estado, cidade, numerocartao, codigocartao, validadecartao) values (null,':nome', ':usuario', ':cpf', ':celular', ':senha', ':confir_senha', ':email', ':data_nascimento', ':estado', ':cidade', ':numerodocartao', ':codigocartao', ':validadecartao')",
+            [
+                ":nome" => $nome,
+                ":usuario" => $usuario,
+                ":cpf" => $cpf,
+                ":celular" => $celular,
+                ":senha" => $senha,
+                ":confir_senha" => $confir_senha,
+                ":email" => $email,
+                ":data_nascimento" => $data_nascimento,
+                ":estado" => $estado,
+                ":cidade" => $cidade,
+                ":numerocartao" => $numerodocartao,
+                ":codigocartao" => $codigocartao,
+                ":validadecartao" => $validadecartao
+            ]
+          )
+        );
     }
 }
