@@ -103,8 +103,8 @@ final class UsuarioController implements IController
             return;
         }
         
-        $model = new UsuarioModel($nome);
-        if (!UsuarioDAO::getSingleton()->cadastrarUsuario($nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao)) {
+        $model = new UsuarioModel(-1, $nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao);
+        if (!UsuarioDAO::getSingleton()->cadastrarUsuario($model)) {
             self::$utils->onRawIndexErr("Não foi possível cadastrar o usuário!", self::REF_INDEX);
             return;
         }
