@@ -56,10 +56,13 @@ final class UsuarioController implements IController
             case "cadastrar":
                 $this->cadastrarUsuario($args);
                 break;
+            case "listar":
+                $this->listarUsuarios();
+                break;
         }
     }
 
-    public function autenticarUsuario(array $args): void
+    private function autenticarUsuario(array $args): void
     {
         if (self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
             || self::$utils->isNullOrEmpty(($senha = self::$utils->tryGetValue($args, "senha")))
@@ -76,7 +79,7 @@ final class UsuarioController implements IController
         }
     }
 
-    public function logoutUsuario(): void
+    private function logoutUsuario(): void
     {
         session_start();
         session_destroy();
@@ -84,7 +87,7 @@ final class UsuarioController implements IController
         self::$utils->onRawIndexOk("Logout efetuado com sucesso!", self::REF_INDEX);
     }
 
-    public function cadastrarUsuario(array $args): void
+    private function cadastrarUsuario(array $args): void
     {
         if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nomecomp")))
             || self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
@@ -102,13 +105,66 @@ final class UsuarioController implements IController
             self::$utils->onRawIndexErr("<strong>Campos</strong> preenchidos de forma inválida!", self::REF_INDEX);
             return;
         }
-        
+
         $model = new UsuarioModel(-1, $nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao);
         if (!UsuarioDAO::getSingleton()->cadastrarUsuario($model)) {
             self::$utils->onRawIndexErr("Não foi possível cadastrar o usuário!", self::REF_INDEX);
             return;
         }
-        
+
         self::$utils->onRawIndexOk("Usuário cadastrado com sucesso!", self::REF_INDEX);
+    }
+
+    private function listarUsuarios(): void
+    {
+        if (($usuarios = UsuarioDAO::getSingleton()->listarUsuarios()) === null) {
+            echo '
+            <div class="jumbotron alert-danger alert border-danger">
+                <p class="text-danger" align="justify">
+                    Não existem usuários cadastrados no momento!
+                </p>
+            </div>
+            ';
+            return;
+        }
+
+        $context = '
+            <table class="table" style="background-color: #fff; width:1920px; margin: 1px;">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nome Completo</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Data de Nascimento</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Cidade</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+        ';
+
+        $i = 0;
+        foreach ($usuarios as $usuario)
+            $context .= '
+                <tr>
+                    <th scope="row">' . ++$i . '</th>
+                    <td>' . $usuario->getId() . '</td>
+                    <td>' . $usuario->getNome() . '</td>
+                    <td>' . $usuario->getUsuario() . '</td>
+                    <td>' . $usuario->getCpf() . '</td>
+                    <td>' . $usuario->getCelular() . '</td>
+                    <td>' . $usuario->getEmail() . '</td>
+                    <td>' . $usuario->getDataNascimento() . '</td>
+                    <td>' . $usuario->getEstado() . '</td>
+                    <td>' . $usuario->getCidade() . '</td>
+                    <td><input class="btn btn-danger" type="button" value="Deletar"></td>
+                    <td><input class="btn btn-warning" type="button" value="Editar"></td>
+                </tr>
+            ';
+        $context .= '<table>';
+        echo $context;
     }
 }

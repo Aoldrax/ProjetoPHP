@@ -8,9 +8,9 @@
 
 namespace dao;
 
-use model\UsuarioModel;
 use dao\db\MySQLDatabase;
 use dao\db\SQLQuery;
+use model\UsuarioModel;
 use PDO;
 
 final class UsuarioDAO
@@ -70,5 +70,34 @@ final class UsuarioDAO
                 ]
             )
         );
+    }
+
+    public function listarUsuarios(): ?array
+    {
+        $mysql = MySQLDatabase::getSingleton();
+        $result = $mysql->select(new SQLQuery("SELECT * FROM `usuario`"));
+        if ($result === null)
+            return null;
+
+        $usuarios = array();
+        while ($data = $result->fetch(PDO::FETCH_OBJ))
+            array_push($usuarios, new UsuarioModel(
+                $data->id,
+                $data->nome,
+                $data->usuario,
+                $data->cpf,
+                $data->celular,
+                $data->senha,
+                $data->confir_senha,
+                $data->email,
+                $data->data_nascimento,
+                $data->estado,
+                $data->cidade,
+                $data->numerodocartao,
+                $data->codigocartao,
+                $data->validadecartao
+            ));
+
+        return $usuarios;
     }
 }
