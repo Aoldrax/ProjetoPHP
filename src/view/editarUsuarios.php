@@ -11,7 +11,7 @@
     <center>
         <h1 aling="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">Editar Usuários</h1>
 
-        <form method="" style="background-color: #fff; height: 1333px; width:380px;" class="rounded">
+        <form action="../php/MVCRouter.php" method="post" style="background-color: #fff; height: 1333px; width:380px;" class="rounded">
             <div class="form-group">
                 <p>Nome Completo</p>
                 <input type="text" name="nomecomp" value="">

@@ -15,7 +15,7 @@
     <center>
         <h1 aling="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">Cadastrar Filmes</h1>
 
-        <form method="" style="background-color: #fff; height: 910px; width:380px;" class="rounded">
+        <form action="../php/MVCRouter.php" method="post" style="background-color: #fff; height: 910px; width:380px;" class="rounded">
             <div class="form-group">
                 <p>Nome do Filme</p>
                 <input type="text" name="" placeholder="Insira o nome do filmes">

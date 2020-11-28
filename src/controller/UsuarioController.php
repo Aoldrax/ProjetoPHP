@@ -51,20 +51,23 @@ final class UsuarioController implements IController
             case "logout":
                 $this->logoutUsuario();
                 break;
+            case "cadastrar":
+                $this->cadastrarUsuario($args);
+                break;
         }
     }
 
     public function autenticarUsuario(array $args): void
     {
-        if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nome")))
+        if (self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
             || self::$utils->isNullOrEmpty(($senha = self::$utils->tryGetValue($args, "senha")))
-            || !UsuarioDAO::getSingleton()->verificarCadastro($nome, $senha)) {
+            || !UsuarioDAO::getSingleton()->verificarCadastro($usuario, $senha)) {
             self::$utils->onRawIndexErr("<strong>Nome</strong> ou <strong>Senha</strong> inválidos!", self::REF_INDEX);
             return;
         } else {
             session_start();
 
-            $_SESSION["usuario"] = $nome;
+            $_SESSION["usuario"] = $usuario;
             $_SESSION["senha"] = $senha;
 
             self::$utils->onRawIndexEmpty(self::REF_AUTH);
@@ -77,5 +80,26 @@ final class UsuarioController implements IController
         session_destroy();
 
         self::$utils->onRawIndexOk("Logout efetuado com sucesso!", self::REF_INDEX);
+    }
+
+    public function cadastrarUsuario(array $args): void
+    {
+        if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nome")))
+            || self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
+            || self::$utils->isNullOrEmpty(($cpf = self::$utils->tryGetValue($args, "cpf")))
+            || self::$utils->isNullOrEmpty(($celular = self::$utils->tryGetValue($args, "celular")))
+            || self::$utils->isNullOrEmpty(($senha = self::$utils->tryGetValue($args, "senha")))
+            || self::$utils->isNullOrEmpty(($confir_senha = self::$utils->tryGetValue($args, "confir_senha")))
+            || self::$utils->isNullOrEmpty(($email = self::$utils->tryGetValue($args, "email")))
+            || self::$utils->isNullOrEmpty(($data_nascimento = self::$utils->tryGetValue($args, "data_nascimento")))
+            || self::$utils->isNullOrEmpty(($estado = self::$utils->tryGetValue($args, "estado")))
+            || self::$utils->isNullOrEmpty(($cidade = self::$utils->tryGetValue($args, "cidade")))
+            || self::$utils->isNullOrEmpty(($numerodocartao = self::$utils->tryGetValue($args, "numerodocartao")))
+            || self::$utils->isNullOrEmpty(($codigocartao = self::$utils->tryGetValue($args, "codigocartao")))
+            || self::$utils->isNullOrEmpty(($validadecartao = self::$utils->tryGetValue($args, "validadecartao")))
+            || UsuarioDAO::getSingleton()->cadastrarUsuario($nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao)) {
+            self::$utils->onRawIndexErr("<strong>Campos</strong>preenchidos de forma inválida!,verifique se nao tem nenum campo em <strong>branco ou com apenas espaço!</strong>", self::REF_INDEX);
+            return;
+        }
     }
 }

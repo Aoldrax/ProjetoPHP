@@ -13,14 +13,32 @@
 
     <!--jquery-->
     <center>
+        <?php
+        if (isset($_GET['err']))
+            echo '
+        <div class="alert alert-danger">
+            <p>' . urldecode($_GET['err']) . '</p>
+        </div>
+        <hr/>
+        ';
+        if (isset($_GET['success']))
+            echo '
+        <div class="alert alert-success">
+            <p>' . urldecode($_GET['success']) . '</p>
+        </div>
+        <hr/>
+        ';
+        ?>
         <h1 aling="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">
             Cadastrar Usuários</h1>
 
-        <form method="" style="background-color: #fff; height: 1333px; width:380px;" class="rounded">
+        <form action="../php/MVCRouter.php" method="post" style="background-color: #fff; height: 1333px; width:380px;" class="rounded">
             <div class="form-group">
                 <p>Nome Completo</p>
                 <input type="text" name="nomecomp" placeholder="Insira seu nome completo">
             </div>
+            <input type="hidden" name="controller" value="usuario"/>
+            <input type="hidden" name="action" value="cadastrar"/>
             <div class="form-group">
                 <p>Usuário</p>
                 <input type="text" name="usuario" placeholder="Insira seu nome de usuário">
