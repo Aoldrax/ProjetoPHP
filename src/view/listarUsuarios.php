@@ -10,6 +10,7 @@
 
 <body>
 <?php
+include "../php/PhpUtils.php";
 include "../controller/ControllerManager.php";
 
 use controller\ControllerManager;
