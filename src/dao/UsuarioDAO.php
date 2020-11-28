@@ -52,7 +52,7 @@ final class UsuarioDAO
         $mysql = MySQLDatabase::getSingleton();
         return $mysql->insert(
             new SQLQuery(
-                "INSERT INTO `usuarios` (`nome`, `usuario`, `cpf`, `celular`, `senha`, `confir_senha`, `email`, `data_nascimento`, `estado`, `cidade`, `numerodocartao`, `codigocartao`, `validadecartao`) VALUES (':nome', ':usuario', ':cpf', ':celular', ':senha', ':confir_senha', ':email', ':data_nascimento', ':estado', ':cidade', ':numerodocartao', ':codigocartao', ':validadecartao')",
+                "INSERT INTO `usuario` (`nome`, `usuario`, `cpf`, `celular`, `senha`, `confir_senha`, `email`, `data_nascimento`, `estado`, `cidade`, `numerodocartao`, `codigocartao`, `validadecartao`) VALUES (':nome', ':usuario', ':cpf', ':celular', ':senha', ':confir_senha', ':email', ':data_nascimento', ':estado', ':cidade', ':numerodocartao', ':codigocartao', ':validadecartao')",
                 [
                     ":nome" => $model->getNome(),
                     ":usuario" => $model->getUsuario(),

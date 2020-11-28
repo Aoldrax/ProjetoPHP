@@ -54,7 +54,7 @@ final class UsuarioController implements IController
                 $this->logoutUsuario();
                 break;
             case "cadastrar":
-                $this->cadastrarUsuario($args);
+                $this->verificarCadastroUsuario($args);
                 break;
         }
     }
@@ -84,7 +84,7 @@ final class UsuarioController implements IController
         self::$utils->onRawIndexOk("Logout efetuado com sucesso!", self::REF_INDEX);
     }
 
-    public function cadastrarUsuario(array $args): void
+    public function verificarCadastroUsuario(array $args): void
     {
         if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nomecomp")))
             || self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
