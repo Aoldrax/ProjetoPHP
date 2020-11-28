@@ -9,8 +9,10 @@
 namespace controller;
 
 use dao\UsuarioDAO;
+use model\UsuarioModel;
 use php\PhpUtils;
 
+include "../model/UsuarioModel.php";
 include "../dao/db/SQLQuery.php";
 include "../dao/db/MySQLDatabase.php";
 include "../dao/UsuarioDAO.php";
@@ -84,22 +86,29 @@ final class UsuarioController implements IController
 
     public function cadastrarUsuario(array $args): void
     {
-        if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nome")))
+        if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nomecomp")))
             || self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
             || self::$utils->isNullOrEmpty(($cpf = self::$utils->tryGetValue($args, "cpf")))
             || self::$utils->isNullOrEmpty(($celular = self::$utils->tryGetValue($args, "celular")))
             || self::$utils->isNullOrEmpty(($senha = self::$utils->tryGetValue($args, "senha")))
-            || self::$utils->isNullOrEmpty(($confir_senha = self::$utils->tryGetValue($args, "confir_senha")))
+            || self::$utils->isNullOrEmpty(($confir_senha = self::$utils->tryGetValue($args, "confsenha")))
             || self::$utils->isNullOrEmpty(($email = self::$utils->tryGetValue($args, "email")))
-            || self::$utils->isNullOrEmpty(($data_nascimento = self::$utils->tryGetValue($args, "data_nascimento")))
+            || self::$utils->isNullOrEmpty(($data_nascimento = self::$utils->tryGetValue($args, "datanasc")))
             || self::$utils->isNullOrEmpty(($estado = self::$utils->tryGetValue($args, "estado")))
             || self::$utils->isNullOrEmpty(($cidade = self::$utils->tryGetValue($args, "cidade")))
-            || self::$utils->isNullOrEmpty(($numerodocartao = self::$utils->tryGetValue($args, "numerodocartao")))
+            || self::$utils->isNullOrEmpty(($numerodocartao = self::$utils->tryGetValue($args, "numerocartao")))
             || self::$utils->isNullOrEmpty(($codigocartao = self::$utils->tryGetValue($args, "codigocartao")))
-            || self::$utils->isNullOrEmpty(($validadecartao = self::$utils->tryGetValue($args, "validadecartao")))
-            || UsuarioDAO::getSingleton()->cadastrarUsuario($nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao)) {
-            self::$utils->onRawIndexErr("<strong>Campos</strong>preenchidos de forma inválida!,verifique se nao tem nenum campo em <strong>branco ou com apenas espaço!</strong>", self::REF_INDEX);
+            || self::$utils->isNullOrEmpty(($validadecartao = self::$utils->tryGetValue($args, "validadecartao")))) {
+            self::$utils->onRawIndexErr("<strong>Campos</strong> preenchidos de forma inválida!", self::REF_INDEX);
             return;
         }
+        
+        $model = new UsuarioModel($nome);
+        if (!UsuarioDAO::getSingleton()->cadastrarUsuario($nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao)) {
+            self::$utils->onRawIndexErr("Não foi possível cadastrar o usuário!", self::REF_INDEX);
+            return;
+        }
+        
+        self::$utils->onRawIndexOk("Usuário cadastrado com sucesso!", self::REF_INDEX);
     }
 }
