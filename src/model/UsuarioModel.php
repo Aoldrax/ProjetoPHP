@@ -10,9 +10,9 @@ namespace model;
 
 final class UsuarioModel
 {
-    private $nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao;
+    private $id, $nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao;
 
-    public function __construct(string $nome, string $usuario, string $cpf, string $celular, string $senha, string $confir_senha, string $email, string $data_nascimento, string $estado, string $cidade, string $numerodocartao, int $codigocartao, string $validadecartao)
+    public function __construct(int $id, string $nome, string $usuario, string $cpf, string $celular, string $senha, string $confir_senha, string $email, string $data_nascimento, string $estado, string $cidade, string $numerodocartao, int $codigocartao, string $validadecartao)
     {
         $this->nome = $nome;
         $this->usuario = $usuario;
