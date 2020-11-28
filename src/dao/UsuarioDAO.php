@@ -8,6 +8,7 @@
 
 namespace dao;
 
+use model\UsuarioModel;
 use dao\db\MySQLDatabase;
 use dao\db\SQLQuery;
 use PDO;
@@ -46,33 +47,28 @@ final class UsuarioDAO
         return $data->count > 0;
     }
 
-    public function cadastrarUsuario( string $nome, string $usuario, string $cpf, string $celular, string $senha, string $confir_senha, string $email, string $data_nascimento, string $estado, string $cidade, string $numerodocartao, int $codigocartao, string $validadecartao): ?int
+    public function cadastrarUsuario(UsuarioModel $model): bool
     {
         $mysql = MySQLDatabase::getSingleton();
-        $result = $mysql->insert(
+        return $mysql->insert(
             new SQLQuery(
-                "INSERT INTO usuarios (nome, usuario, cpf, celular, senha, confir_senha, email, data_nascimento, estado, cidade, numerodocartao, codigocartao, validadecartao) values (':nome', ':usuario', ':cpf', ':celular', ':senha', ':confir_senha', ':email', ':data_nascimento', ':estado', ':cidade', ':numerodocartao', ':codigocartao', ':validadecartao')",
+                "INSERT INTO `usuarios` (`nome`, `usuario`, `cpf`, `celular`, `senha`, `confir_senha`, `email`, `data_nascimento`, `estado`, `cidade`, `numerodocartao`, `codigocartao`, `validadecartao`) VALUES (':nome', ':usuario', ':cpf', ':celular', ':senha', ':confir_senha', ':email', ':data_nascimento', ':estado', ':cidade', ':numerodocartao', ':codigocartao', ':validadecartao')",
                 [
-                    ":nome" => $nome,
-                    ":usuario" => $usuario,
-                    ":cpf" => $cpf,
-                    ":celular" => $celular,
-                    ":senha" => $senha,
-                    ":confir_senha" => $confir_senha,
-                    ":email" => $email,
-                    ":data_nascimento" => $data_nascimento,
-                    ":estado" => $estado,
-                    ":cidade" => $cidade,
-                    ":numerodocartao" => $numerodocartao,
-                    ":codigocartao" => $codigocartao,
-                    ":validadecartao" => $validadecartao
+                    ":nome" => $model->getNome(),
+                    ":usuario" => $model->getUsuario(),
+                    ":cpf" => $model->getCpf(),
+                    ":celular" => $model->getCelular(),
+                    ":senha" => $model->getSenha(),
+                    ":confir_senha" => $model->getConfirSenha(),
+                    ":email" => $model->getEmail(),
+                    ":data_nascimento" => $model->getDataNascimento(),
+                    ":estado" => $model->getEstado(),
+                    ":cidade" => $model->getCidade(),
+                    ":numerodocartao" => $model->getNumerodocartao(),
+                    ":codigocartao" => $model->getCodigocartao(),
+                    ":validadecartao" => $model->getValidadecartao()
                 ]
             )
         );
-        if ($result === null)
-            return false;
-
-        $data = $result->fetch(PDO::FETCH_OBJ);
-        return $data->count > 0;
     }
 }
