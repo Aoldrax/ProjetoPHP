@@ -21,6 +21,7 @@ final class UsuarioController implements IController
 {
     private const REF_INDEX = "../view/";
     private const REF_HOME = "../view/home";
+    private const REF_LISTAR_USR = "../view/listarUsuarios";
 
     private static $singleton, $utils;
 
@@ -61,6 +62,9 @@ final class UsuarioController implements IController
                 break;
             case "remover":
                 $this->removerUsuario($args);
+                break;
+            case "editar":
+                $this->editarUsuario($args);
                 break;
         }
     }
@@ -171,10 +175,29 @@ final class UsuarioController implements IController
                             <input class="btn btn-danger" type="submit" value="Deletar"/>
                         </form>
                     </td>
+                    <td>
+                        <form action="editarUsuarios.php" method="post">
+                            <input type="hidden" name="id" value="' . $usuario->getId() . '"/>
+                            <input type="hidden" name="nomecomp" value="' . $usuario->getNome() . '"/>
+                            <input type="hidden" name="usuario" value="' . $usuario->getUsuario() . '"/>
+                            <input type="hidden" name="cpf" value="' . $usuario->getCpf() . '"/>
+                            <input type="hidden" name="celular" value="' . $usuario->getCelular() . '"/>
+                            <input type="hidden" name="senha" value="' . $usuario->getSenha() . '"/>
+                            <input type="hidden" name="confsenha" value="' . $usuario->getConfirSenha() . '"/>
+                            <input type="hidden" name="email" value="' . $usuario->getEmail() . '"/>
+                            <input type="hidden" name="datanasc" value="' . $usuario->getDataNascimento() . '"/>
+                            <input type="hidden" name="estado" value="' . $usuario->getEstado() . '"/>
+                            <input type="hidden" name="cidade" value="' . $usuario->getCidade() . '"/>
+                            <input type="hidden" name="numerocartao" value="' . $usuario->getNumerodocartao() . '"/>
+                            <input type="hidden" name="codigocartao" value="' . $usuario->getCodigocartao() . '"/>
+                            <input type="hidden" name="validadecartao" value="' . $usuario->getValidadecartao() . '"/>
+                            <input class="btn btn-warning" type="submit" value="Editar"/>
+                        </form>
+                    </td>
                 </tr>
             ';
 
-        $context .= '<table>';
+        $context .= '</table>';
         echo $context;
     }
 
@@ -191,5 +214,35 @@ final class UsuarioController implements IController
         }
 
         self::$utils->onRawIndexEmpty(self::REF_HOME);
+    }
+
+
+    private function editarUsuario(array $args): void
+    {
+        if (self::$utils->isNullOrEmpty(($id = self::$utils->tryGetValue($args, "id")))
+            || self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nomecomp")))
+            || self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
+            || self::$utils->isNullOrEmpty(($cpf = self::$utils->tryGetValue($args, "cpf")))
+            || self::$utils->isNullOrEmpty(($celular = self::$utils->tryGetValue($args, "celular")))
+            || self::$utils->isNullOrEmpty(($senha = self::$utils->tryGetValue($args, "senha")))
+            || self::$utils->isNullOrEmpty(($confir_senha = self::$utils->tryGetValue($args, "confsenha")))
+            || self::$utils->isNullOrEmpty(($email = self::$utils->tryGetValue($args, "email")))
+            || self::$utils->isNullOrEmpty(($data_nascimento = self::$utils->tryGetValue($args, "datanasc")))
+            || self::$utils->isNullOrEmpty(($estado = self::$utils->tryGetValue($args, "estado")))
+            || self::$utils->isNullOrEmpty(($cidade = self::$utils->tryGetValue($args, "cidade")))
+            || self::$utils->isNullOrEmpty(($numerodocartao = self::$utils->tryGetValue($args, "numerocartao")))
+            || self::$utils->isNullOrEmpty(($codigocartao = self::$utils->tryGetValue($args, "codigocartao")))
+            || self::$utils->isNullOrEmpty(($validadecartao = self::$utils->tryGetValue($args, "validadecartao")))) {
+            self::$utils->onRawIndexErr("<strong>Campos</strong> preenchidos de forma inválida!", self::REF_LISTAR_USR);
+            return;
+        }
+
+        $model = new UsuarioModel($id, $nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao);
+        if (!UsuarioDAO::getSingleton()->alterarUsuario($model)) {
+            self::$utils->onRawIndexErr("Não foi possível alterar os dados do usuário!", self::REF_LISTAR_USR);
+            return;
+        }
+
+        self::$utils->onRawIndexOk("Usuário alterado com sucesso!", self::REF_LISTAR_USR);
     }
 }
