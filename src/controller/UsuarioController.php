@@ -20,7 +20,7 @@ include "../dao/UsuarioDAO.php";
 final class UsuarioController implements IController
 {
     private const REF_INDEX = "../view/";
-    private const REF_AUTH = "../view/home";
+    private const REF_HOME = "../view/home";
 
     private static $singleton, $utils;
 
@@ -54,13 +54,13 @@ final class UsuarioController implements IController
                 $this->logoutUsuario();
                 break;
             case "cadastrar":
-                $this->verificarCadastroUsuario($args);
+                $this->cadastrarNovoUsuario($args);
                 break;
             case "listar":
-                $this->listarUsuarios();
+                $this->listarTodosUsuarios();
                 break;
             case "remover":
-                $this->verificaRemoçãoUsuario($args);
+                $this->removerUsuario($args);
                 break;
         }
     }
@@ -78,7 +78,7 @@ final class UsuarioController implements IController
             $_SESSION["usuario"] = $usuario;
             $_SESSION["senha"] = $senha;
 
-            self::$utils->onRawIndexEmpty(self::REF_AUTH);
+            self::$utils->onRawIndexEmpty(self::REF_HOME);
         }
     }
 
@@ -90,8 +90,7 @@ final class UsuarioController implements IController
         self::$utils->onRawIndexOk("Logout efetuado com sucesso!", self::REF_INDEX);
     }
 
-
-    private function verificarCadastroUsuario(array $args): void
+    private function cadastrarNovoUsuario(array $args): void
     {
         if (self::$utils->isNullOrEmpty(($nome = self::$utils->tryGetValue($args, "nomecomp")))
             || self::$utils->isNullOrEmpty(($usuario = self::$utils->tryGetValue($args, "usuario")))
@@ -119,7 +118,7 @@ final class UsuarioController implements IController
         self::$utils->onRawIndexOk("Usuário cadastrado com sucesso!", self::REF_INDEX);
     }
 
-    private function listarUsuarios(): void
+    private function listarTodosUsuarios(): void
     {
         if (($usuarios = UsuarioDAO::getSingleton()->listarUsuarios()) === null) {
             echo '
@@ -164,36 +163,33 @@ final class UsuarioController implements IController
                     <td>' . $usuario->getDataNascimento() . '</td>
                     <td>' . $usuario->getEstado() . '</td>
                     <td>' . $usuario->getCidade() . '</td>
-                    <form action="../php/MVCRouter.php" method="post">
-                    <td><input type="hidden" name="controller" value="usuario" ></td>
-                    <td><input type="hidden" name="action" value="remover" ></td>
-                    <td><input type="hidden" name="id" value='.$usuario->getId().'></td>
-                    <td><input class="btn btn-danger" type="submit" value="Deletar"></td>
-                    
-                    </form>
-                    <form action="../php/MVCRouter.php" method="post">
-                    <td><input type="hidden" name="controller" value="usuario" ></td>
-                    <td><input type="hidden" name="action" value="editar" ></td>
-                    <td><input type="hidden" name="id" value='.$usuario->getId().'></td>
-                    <td><input class="btn btn-danger" type="submit" value="Editar"></td>
-                    </form>
+                    <td>
+                        <form action="../php/MVCRouter.php" method="post">
+                            <input type="hidden" name="controller" value="usuario"/>
+                            <input type="hidden" name="action" value="remover"/>
+                            <input type="hidden" name="id" value="' . $usuario->getId() . '"/>
+                            <input class="btn btn-danger" type="submit" value="Deletar"/>
+                        </form>
+                    </td>
                 </tr>
             ';
+
         $context .= '<table>';
         echo $context;
     }
-     public function verificaRemocaoUsuario(array $args):bool
-     {
 
+    private function removerUsuario(array $args): void
+    {
+        if (self::$utils->isNullOrEmpty(($id = self::$utils->tryGetValue($args, "id")))) {
+            self::$utils->onRawIndexErr("Elemento de identificação do usuário não encontrada!", self::REF_INDEX);
+            return;
+        }
 
-         $usrDao = UsuarioDAO::getSingleton();
-         if (!$usrDao->removerUsuarios()){
-             $result["err"] = "Não foi possível remover o gerente!";
-             return $result;
-         }
+        if (!UsuarioDAO::getSingleton()->removerUsuario($id)) {
+            self::$utils->onRawIndexErr("Não foi possível remover o usuário do sistema!<br/><strong>ID:</strong>" . $id, self::REF_INDEX);
+            return;
+        }
 
-         $result["status"] ="Usuario foi removido com sucesso!";
-         return  $result;
-
-     }
+        self::$utils->onRawIndexEmpty(self::REF_HOME);
+    }
 }

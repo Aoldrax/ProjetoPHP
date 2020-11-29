@@ -14,7 +14,7 @@ final class UsuarioModel
 
     public function __construct(int $id, string $nome, string $usuario, string $cpf, string $celular, string $senha, string $confir_senha, string $email, string $data_nascimento, string $estado, string $cidade, string $numerodocartao, int $codigocartao, string $validadecartao)
     {
-        $this->id =$id;
+        $this->id = $id;
         $this->nome = $nome;
         $this->usuario = $usuario;
         $this->cpf = $cpf;
@@ -40,12 +40,12 @@ final class UsuarioModel
 
     /**
      * @param int $id
+     * @return UsuarioModel
      */
-    public function setId(int $id): void
+    public function setId(int $id): UsuarioModel
     {
         $this->id = $id;
     }
-
 
 
     /**
