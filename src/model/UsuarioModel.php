@@ -40,13 +40,13 @@ final class UsuarioModel
 
     /**
      * @param int $id
-     * @return UsuarioModel
      */
-    public function setId(int $id): UsuarioModel
+    public function setId(int $id): void
     {
         $this->id = $id;
-        return $this;
     }
+
+
 
     /**
      * @return string

@@ -100,4 +100,14 @@ final class UsuarioDAO
 
         return $usuarios;
     }
+
+    public function  removerUsuarios(UsuarioModel $model1): bool
+    {
+        $mysql = MySQLDatabase::getSingleton();
+        return $mysql ->delete(
+            new SQLQuery(
+            "DELETE FROM `usuario` WHERE `id` = :id",
+            [":id" => $model1->getId()]
+        ));
+    }
 }

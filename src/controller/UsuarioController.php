@@ -59,6 +59,9 @@ final class UsuarioController implements IController
             case "listar":
                 $this->listarUsuarios();
                 break;
+            case "remover":
+                $this->verificaRemoçãoUsuario($args);
+                break;
         }
     }
 
@@ -161,11 +164,36 @@ final class UsuarioController implements IController
                     <td>' . $usuario->getDataNascimento() . '</td>
                     <td>' . $usuario->getEstado() . '</td>
                     <td>' . $usuario->getCidade() . '</td>
-                    <td><input class="btn btn-danger" type="button" value="Deletar"></td>
-                    <td><input class="btn btn-warning" type="button" value="Editar"></td>
+                    <form action="../php/MVCRouter.php" method="post">
+                    <td><input type="hidden" name="controller" value="usuario" ></td>
+                    <td><input type="hidden" name="action" value="remover" ></td>
+                    <td><input type="hidden" name="id" value='.$usuario->getId().'></td>
+                    <td><input class="btn btn-danger" type="submit" value="Deletar"></td>
+                    
+                    </form>
+                    <form action="../php/MVCRouter.php" method="post">
+                    <td><input type="hidden" name="controller" value="usuario" ></td>
+                    <td><input type="hidden" name="action" value="editar" ></td>
+                    <td><input type="hidden" name="id" value='.$usuario->getId().'></td>
+                    <td><input class="btn btn-danger" type="submit" value="Editar"></td>
+                    </form>
                 </tr>
             ';
         $context .= '<table>';
         echo $context;
     }
+     public function verificaRemocaoUsuario(array $args):bool
+     {
+
+
+         $usrDao = UsuarioDAO::getSingleton();
+         if (!$usrDao->removerUsuarios()){
+             $result["err"] = "Não foi possível remover o gerente!";
+             return $result;
+         }
+
+         $result["status"] ="Usuario foi removido com sucesso!";
+         return  $result;
+
+     }
 }
