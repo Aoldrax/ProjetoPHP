@@ -49,7 +49,8 @@ if (isset($_SESSION['usuario'])) {
                 <label for="senha">Senha</label>
                 <input type="password" name="senha" placeholder="Insira sua senha">
             </div>
-            <input type="submit" name="logar" value="Login"><br>
+            <input type="submit" class="btn btn-lg btn-success" value="Login"/>
+            <br/>
             <a href="cadastroUsuarios">Ainda não se cadastrou?</a>
         </form>
     </div>
