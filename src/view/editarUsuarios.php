@@ -1,104 +1,169 @@
-<?php include_once("../assets/header.html") ?>
+<?php
+
+include "../php/PhpUtils.php";
+
+use php\PhpUtils;
+
+session_start();
+
+$utils = PhpUtils::getSingleton();
+$refHome = "/home";
+
+if (!isset($_SESSION["usuario"])) {
+    $utils->onRawIndexErr("É necessário realizar login para acessar esta página!", "/view/");
+    return;
+}
+
+if ($utils->isNullOrEmpty(($id = $utils->tryGetValue($args, "id")))
+    || $utils->isNullOrEmpty(($nome = $utils->tryGetValue($args, "nomecomp")))
+    || $utils->isNullOrEmpty(($usuario = $utils->tryGetValue($args, "usuario")))
+    || $utils->isNullOrEmpty(($cpf = $utils->tryGetValue($args, "cpf")))
+    || $utils->isNullOrEmpty(($celular = $utils->tryGetValue($args, "celular")))
+    || $utils->isNullOrEmpty(($senha = $utils->tryGetValue($args, "senha")))
+    || $utils->isNullOrEmpty(($confir_senha = $utils->tryGetValue($args, "confsenha")))
+    || $utils->isNullOrEmpty(($email = $utils->tryGetValue($args, "email")))
+    || $utils->isNullOrEmpty(($data_nascimento = $utils->tryGetValue($args, "datanasc")))
+    || $utils->isNullOrEmpty(($estado = $utils->tryGetValue($args, "estado")))
+    || $utils->isNullOrEmpty(($cidade = $utils->tryGetValue($args, "cidade")))
+    || $utils->isNullOrEmpty(($numerodocartao = $utils->tryGetValue($args, "numerocartao")))
+    || $utils->isNullOrEmpty(($codigocartao = $utils->tryGetValue($args, "codigocartao")))
+    || $utils->isNullOrEmpty(($validadecartao = $utils->tryGetValue($args, "validadecartao")))) {
+    $utils->onRawIndexErr("Não é possível alterar os cadastros deste usuário devido a pendência de campos.", $refHome);
+    return;
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include "../assets/header.html"; ?>
     <title>Editar Usuários</title>
 </head>
-<body>
-    <!--jquery-->
-    <center>
-        <h1 aling="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">Editar Usuários</h1>
+<body style="height: 100%;" class="alert-light">
+<table class="table" border="0" width="100%">
+    <tr>
+        <td width="75%">
+            <p class="card-header text-light">
+                Seja bem-vindo(a), <strong><?php echo $_SESSION["usuario"]; ?></strong>!
+            </p>
+        </td>
+        <td align="right">
+            <form action="../php/MVCRouter.php" method="post">
+                <input type="hidden" name="controller" value="usuario"/>
+                <input type="hidden" name="action" value="logout"/>
+                <input class="font-weight-bold btn btn-lg btn-outline-danger" type="submit" value="Sair"/>
+            </form>
+        </td>
+    </tr>
+</table>
+<center>
+    <h1 align="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">Editar
+        Usuários</h1>
 
-        <form action="../php/MVCRouter.php" method="post" style="background-color: #fff; height: 1333px; width:380px;" class="rounded">
-            <div class="form-group">
-                <p>Nome Completo</p>
-                <input type="text" name="nomecomp" value="">
+    <form action="../php/MVCRouter.php" method="post" style="background-color: #fff; height: 1333px; width:380px;"
+          class="rounded">
+        <input type="hidden" name="controller" value="usuario"/>
+        <input type="hidden" name="action" value="editar"/>
+        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+        <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" name="nomecomp" value="<?php echo $nome; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="usuario">Usuário</label>
+            <input type="text" id="usuario" name="usuario" value="<?php echo $usuario; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" value="<?php echo $cpf; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="celular">Celular</label>
+            <input type="text" id="celular" name="celular" value="<?php echo $celular; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="text" id="senha" name="senha" value="<?php echo $senha; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="confsenha">Confirmar Senha</label>
+            <input type="text" id="confsenha" name="confsenha" value="<?php echo $confir_senha; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="text" id="email" name="email" value="<?php echo $email; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="datanasc">Data de Nascimento</label>
+            <input type="date" id="datanasc" name="datanasc" value="<?php echo $data_nascimento; ?>"/>
+        </div>
+        <div class="form-group">
+            <p>Estado</p>
+            <div class="input-field col s12">
+                <?php
+                $estados = array(
+                    "AC" => "Acre",
+                    "AL" => "Alagoas",
+                    "AP" => "Amapá",
+                    "AM" => "Amazonas",
+                    "BA" => "Bahia",
+                    "CE" => "Ceará",
+                    "DF" => "Distrito Federal",
+                    "ES" => "Espírito Santo",
+                    "GO" => "Goiás",
+                    "MA" => "Maranhão",
+                    "MT" => "Mato Grosso",
+                    "MS" => "Mato Grosso do Sul",
+                    "MG" => "Minas Gerais",
+                    "PA" => "Pará",
+                    "PB" => "Paraíba",
+                    "PR" => "Paraná",
+                    "PE" => "Pernambuco",
+                    "PI" => "Piauí",
+                    "RJ" => "Rio de Janeiro",
+                    "RN" => "Rio Grande do Norte",
+                    "RS" => "Rio Grande do Sul",
+                    "RO" => "Rondônia",
+                    "RR" => "Roraima",
+                    "SC" => "Santa Catarina",
+                    "SP" => "São Paulo",
+                    "SE" => "Sergipe",
+                    "TO" => "Tocantins",
+                );
+                $estadoSelect = '
+                    <label for="estado">Estados</label>
+                    <select id="estado" name="estado">
+                        <option value="" disabled>Escolha seu estado</option>
+                ';
+                foreach ($estados as $sigla => $estado_)
+                    $estadoSelect .= '<option value="' . $sigla . '"' . ($estado === $sigla ? " selected" : "") . '>' . $estado_ . '</option>';
+                $estadoSelect .= '</select>';
+                echo $estadoSelect;
+                ?>
             </div>
-            <div class="form-group">
-                <p>Usuário</p>
-                <input type="text" name="usuario" value="">
-            </div>
-            <div class="form-group">
-                <p>CPF</p>
-                <input type="text" name="cpf" value="">
-            </div>
-            <div class="form-group">
-                <p>Celular</p>
-                <input type="text" name="celular" value="">
-            </div>
-            <div class="form-group">
-                <p>Senha</p>
-                <input type="password" name="senha" value="">
-            </div>
-            <div class="form-group">
-                <p>Confirma Senha</p>
-                <input type="password" name="confsenha" value="">
-            </div>
-            <div class="form-group">
-                <p>Email</p>
-                <input type="text" name="email" value="">
-            </div>
-            <div class="form-group">
-                <p>Data de Nascimento</p>
-                <input type="date" name="datanasc" value="">
-            </div>
-            <div class="form-group">
-                <p>Estado</p>
-                <div class="input-field col s12">
-                    <select name="estado">
-                        <option value="">Escolha seu estado</option>
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <p>Cidade</p>
-                <input type="text" name="cidade" value="">
-            </div>
-            <div class="form-group">
-                <p>Numero do cartão</p>
-                <input type="text" name="numerocartao" value="">
-            </div>
-            <div class="form-group">
-                <p>Codigo do cartão</p>
-                <input type="text" name="codigocartao" value="">
-            </div>
-            <div class="form-group">
-                <p>Validade do cartão</p>
-                <input type="text" name="validadecartao" value="">
-            </div>
-            </br>
-            </br><input type="submit" name="salvar" value="cadastro" class="btn btn-danger">
-        </form>
-    </center>
-    <h2><a href="../controller/logout.php">Sair</a></h2>
+        </div>
+        <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" value="<?php echo $cidade; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="numerocartao">Número do cartão</label>
+            <input type="text" id="numerocartao" name="numerocartao" value="<?php echo $numerodocartao; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="codigocartao">Codigo do cartão</label>
+            <input type="text" id="codigocartao" name="codigocartao" value="<?php echo $codigocartao; ?>"/>
+        </div>
+        <div class="form-group">
+            <label for="validadecartao">Validade do cartão</label>
+            <input type="text" id="validadecartao" name="validadecartao" value="<?php echo $validadecartao; ?>"/>
+        </div>
+        <br/>
+        <br/>
+        <input type="submit" class="btn btn-lg btn-success" value="Salvar"/>
+        <a href="listarUsuarios">
+            <input type="submit" class="btn btn-lg btn-danger" value="Voltar"/>
+        </a>
+    </form>
+</center>
 </body>
 </html>
