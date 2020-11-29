@@ -111,4 +111,30 @@ final class UsuarioDAO
             )
         );
     }
+
+    public function alterarUsuario(UsuarioModel $model): bool
+    {
+        $mysql = MySQLDatabase::getSingleton();
+        return $mysql->update(
+            new SQLQuery(
+                "UPDATE `usuario` SET `nome` = ':nome', `usuario` = ':usuario', `cpf` = ':cpf', `celular` = ':celular', `senha` = ':senha', `confir_senha` = ':confir_senha', `email` = ':email', `data_nascimento` = ':data_nascimento', `estado` = ':estado', `cidade` = ':cidade', `numerodocartao` = ':numerodocartao', `codigocartao` = ':codigocartao', `validadecartao` = ':validadecartao' WHERE `id` = :id",
+                [
+                    ":id" => $model->getId(),
+                    ":nome" => $model->getNome(),
+                    ":usuario" => $model->getUsuario(),
+                    ":cpf" => $model->getCpf(),
+                    ":celular" => $model->getCelular(),
+                    ":senha" => $model->getSenha(),
+                    ":confir_senha" => $model->getConfirSenha(),
+                    ":email" => $model->getEmail(),
+                    ":data_nascimento" => $model->getDataNascimento(),
+                    ":estado" => $model->getEstado(),
+                    ":cidade" => $model->getCidade(),
+                    ":numerodocartao" => $model->getNumerodocartao(),
+                    ":codigocartao" => $model->getCodigocartao(),
+                    ":validadecartao" => $model->getValidadecartao()
+                ]
+            )
+        );
+    }
 }
