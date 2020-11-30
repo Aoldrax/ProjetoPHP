@@ -6,7 +6,6 @@ namespace dao;
 use dao\db\MySQLDatabase;
 use dao\db\SQLQuery;
 use model\FilmeModel;
-use model\UsuarioModel;
 use PDO;
 
 final class FilmesDAO
@@ -24,18 +23,18 @@ final class FilmesDAO
         return self::$singleton;
     }
 
-    public function cadastrarFilme(int $id, string $nome, string $duracao, string $nome_diretor, string $data_lançamento, int $usuario_id): bool
+    public function cadastrarFilme(FilmeModel $model): bool
     {
         $mysql = MySQLDatabase::getSingleton();
-        $result = $mysql->insert(
+        return $mysql->insert(
             new SQLQuery(
-                "INSERT INTO `filmes` (id, nome, duracao, nome_diretor, data_lançamento, usuario_id) values(null,':nome', ':duracao', ':nome-diretor', ':data_lançamento', ':usuario_id'",
+                "INSERT INTO `filmes` (nome, duracao, nome_diretor, data_lancamento, usuario_id) values(':nome', ':duracao', ':nome-diretor', ':data_lancamento', ':usuario_id'",
                 [
-                    ":nome" => $nome,
-                    ":duracao" => $duracao,
-                    ":nome-diretor" => $nome_diretor,
-                    ":data_lançamento" => $data_lançamento,
-                    ":usuario_id" => $usuario_id
+                    ":nome" => $model->getNome(),
+                    ":duracao" => $model->getDuracao(),
+                    ":nome-diretor" => $model->getNomeDiretor(),
+                    ":data_lancamento" => $model->getDataLancamento(),
+                    ":usuario_id" => $model->getUsuarioId(),
                 ]
             )
         );
@@ -55,7 +54,7 @@ final class FilmesDAO
                 $data->nome,
                 $data->duracao,
                 $data->nome_diretor,
-                $data->data_lançamento,
+                $data->data_lancamento,
                 $data->usuario_id));
 
         return $filmes;
@@ -77,13 +76,13 @@ final class FilmesDAO
         $mysql = MySQLDatabase::getSingleton();
         return $mysql->update(
             new SQLQuery(
-                "UPDATE `filmes` SET `nome` = ':nome', `duracao` = ':duracao', `nome_diretor` = ':nome_diretor', `data_lançamento` = ':data_lançamento', `usuario_id` = ':usuario_id' WHERE `id` = :id",
+                "UPDATE `filmes` SET `nome` = ':nome', `duracao` = ':duracao', `nome_diretor` = ':nome_diretor', `data_lancamento` = ':data_lancamento', `usuario_id` = ':usuario_id' WHERE `id` = :id",
                 [
                     ":id" => $model1->getId(),
                     ":nome" => $model1->getNome(),
                     ":duracao" => $model1->getDuracao(),
                     ":nome_diretor" => $model1->getNomeDiretor(),
-                    ":data_lançamento" => $model1->getDataLançamento(),
+                    ":data_lancamento" => $model1->getDataLancamento(),
                     ":usuario_id" => $model1->getUsuarioId()
                 ]
 

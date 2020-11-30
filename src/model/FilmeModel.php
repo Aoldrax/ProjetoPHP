@@ -6,15 +6,15 @@ namespace model;
 
 final class FilmeModel
 {
-    private $id, $nome, $duracao, $nome_diretor, $data_lançamento, $usuario_id;
+    private $id, $nome, $duracao, $nome_diretor, $data_lancamento, $usuario_id;
 
-    public function __construct(int $id, string $nome, string $duracao, string $nome_diretor, string $data_lançamento, int $usuario_id)
+    public function __construct(int $id, string $nome, string $duracao, string $nome_diretor, string $data_lancamento, int $usuario_id)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->duracao = $duracao;
         $this->nome_diretor = $nome_diretor;
-        $this->data_lançamento = $data_lançamento;
+        $this->data_lancamento = $data_lancamento;
         $this->usuario_id = $usuario_id;
     }
 
@@ -83,20 +83,21 @@ final class FilmeModel
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDataLançamento()
+    public function getDataLancamento(): string
     {
-        return $this->data_lançamento;
+        return $this->data_lancamento;
     }
 
     /**
-     * @param mixed $data_lançamento
+     * @param string $data_lancamento
      */
-    public function setDataLançamento($data_lançamento): void
+    public function setDataLancamento(string $data_lancamento): void
     {
-        $this->data_lançamento = $data_lançamento;
+        $this->data_lancamento = $data_lancamento;
     }
+
 
     /**
      * @return mixed

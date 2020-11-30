@@ -13,6 +13,22 @@
 
 <!--jquery-->
 <center>
+    <?php
+    if (isset($_GET['err']))
+        echo '
+        <div class="alert alert-danger">
+            <p>' . urldecode($_GET['err']) . '</p>
+        </div>
+        <hr/>
+        ';
+    if (isset($_GET['success']))
+        echo '
+        <div class="alert alert-success">
+            <p>' . urldecode($_GET['success']) . '</p>
+        </div>
+        <hr/>
+        ';
+    ?>
     <h1 aling="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">Cadastrar
         Filmes</h1>
 
@@ -20,22 +36,22 @@
           class="rounded">
         <div class="form-group">
             <p>Nome do Filme</p>
-            <input type="text" name="" placeholder="Insira o nome do filmes">
+            <input type="text" name="nomefilme" placeholder="Insira o nome do filmes">
         </div>
         <div class="form-group">
             <p>Duração</p>
-            <input type="text" name="" placeholder="Insira a duração do filme">
+            <input type="text" name="duracao" placeholder="Insira a duração do filme">
         </div>
         <div class="form-group">
             <p>Nome do Diretor</p>
-            <input type="text" name="" placeholder="Insira o nome do diretor">
+            <input type="text" name="nomediretor" placeholder="Insira o nome do diretor">
         </div>
         <div class="form-group">
             <p>Data de Lançamento</p>
-            <input type="date" name="" placeholder="Insira o data de lançamento">
+            <input type="date" name="datalanca" placeholder="Insira o data de lançamento">
         </div>
         </br>
-        </br><input type="submit" name="" value="cadastro" class="btn btn-danger">
+        </br><input type="submit" value="cadastrar" class="btn btn-danger">
     </form>
 </center>
 </body>

@@ -1,43 +1,68 @@
 <?php
-include_once("../assets/header.html");
-?>
 
+include "../php/PhpUtils.php";
+
+use controller\ControllerManager;
+use php\PhpUtils;
+
+session_start();
+
+if (!isset($_SESSION["usuario"])) {
+    PhpUtils::getSingleton()->onRawIndexErr("É necessário realizar login para acessar esta página!", "/view/");
+    return;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include "../assets/header.html"; ?>
     <title>Listar Filmes</title>
 </head>
 
-<body>
-<table class="table" style="background-color: #fff; width:1920px; margin: 1px;">
+<body style="height: 100%;" class="alert-light">
+<?php
+if (isset($_GET['err']))
+    echo '
+        <div class="alert alert-danger">
+            <p>' . urldecode($_GET['err']) . '</p>
+        </div>
+        <hr/>
+        ';
+if (isset($_GET['success']))
+    echo '
+        <div class="alert alert-success">
+            <p>' . urldecode($_GET['success']) . '</p>
+        </div>
+        <hr/>
+        ';
+?>
+<table class="table" border="0" width="100%">
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Código</th>
-        <th scope="col">Nome do Filme</th>
-        <th scope="col">Duração</th>
-        <th scope="col">Nome do Diretor</th>
-        <th scope="col">Data de Lançamento</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <?php ?>
-    <tr>
-        <th scope="row">1</th>
-        <td>01</td>
-        <td>Monstros S.A.</td>
-        <td>1h 36m</td>
-        <td>Pete Docter</td>
-        <td>14/11/2001</td>
-        <td><input class="btn btn-danger" type="button" value="Deletar"></td>
-        <td><input class="btn btn-warning" type="button" value="Editar"></td>
-    </tr>
-    <?php ?>
-    <table>
+        <td width="75%">
+            <p class="card-header text-light">
+                Seja bem-vindo(a), <strong><?php echo $_SESSION["usuario"]; ?></strong>!
+            </p>
+        </td>
 
-        <h2><a href="../controller/logout.php">Sair</a></h2>
+        </form>
+    </tr>
+</table>
+<?php
+
+include "../controller/IController.php";
+include "../controller/ControllerManager.php";
+
+$args = array(
+    "controller" => "filme",
+    "action" => "listar"
+);
+$controller = $args['controller'];
+$manager = ControllerManager::getSingleton();
+if ($manager->controllerExists($controller))
+    $manager->handler($controller, $args);
+else
+    $utils->onRawIndexErr("Controlador '<strong>" . $controller . "</strong>' indefinido!", $errRef);
+?>
 </body>
 
 </html>

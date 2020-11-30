@@ -3,6 +3,8 @@
 
 namespace controller;
 
+use Error;
+
 include "UsuarioController.php";
 
 final class ControllerManager
@@ -31,7 +33,7 @@ final class ControllerManager
     {
         try {
             self::$controllers[$controller]->handler($args);
-        } catch (\Error $err) {
+        } catch (Error $err) {
             echo "
             <head><link rel='stylesheet' href='../assets/css/bootstrap.css' /></head>
             <div class='card text-white bg-danger' style='padding: 4px; width: 100%'>
