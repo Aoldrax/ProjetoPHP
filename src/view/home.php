@@ -29,28 +29,28 @@ if (!isset($_SESSION["usuario"])) {
             <form action="../php/MVCRouter.php" method="post">
                 <input type="hidden" name="controller" value="usuario"/>
                 <input type="hidden" name="action" value="logout"/>
-                <input class="font-weight-bold btn btn-lg btn-outline-danger" type="submit" value="Sair"/>
+                <input class="font-weight-bold btn btn-lg btn-danger" type="submit" value="Sair"/>
             </form>
         </td>
         <td align="right">
             <form action="listarUsuarios.php" method="post">
-                <input class="font-weight-bold btn btn-lg btn-outline-primary" type="submit" value="Listar Usuario"/>
+                <input class="font-weight-bold btn btn-lg btn-primary" type="submit" value="Listar Usuario"/>
             </form>
         </td>
         <td align="right">
             <form action="listarFilmes.php" method="post">
-                <input class="font-weight-bold btn btn-lg btn-outline-primary" type="submit" value="Listar Filmes"/>
+                <input class="font-weight-bold btn btn-lg btn-primary" type="submit" value="Listar Filmes"/>
             </form>
         </td>
         <td align="right">
             <form action="cadastroUsuarios.php" method="post">
-                <input class="font-weight-bold btn btn-lg btn-outline-primary" type="submit"
+                <input class="font-weight-bold btn btn-lg btn-primary" type="submit"
                        value="Cadastrar novo usuario"/>
             </form>
         </td>
         <td align="right">
             <form action="cadastroFilmes.php" method="post">
-                <input class="font-weight-bold btn btn-lg btn-outline-primary" type="submit"
+                <input class="font-weight-bold btn btn-lg btn-primary" type="submit"
                        value="Cadastrar novo filme"/>
             </form>
         </td>
