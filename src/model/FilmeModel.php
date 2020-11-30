@@ -6,7 +6,7 @@ namespace model;
 
 final class FilmeModel
 {
-    private $id ,$nome, $duracao, $nome_diretor, $data_lançamento, $usuario_id;
+    private $id, $nome, $duracao, $nome_diretor, $data_lançamento, $usuario_id;
 
     public function __construct(int $id, string $nome, string $duracao, string $nome_diretor, string $data_lançamento, int $usuario_id)
     {
