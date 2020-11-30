@@ -54,6 +54,7 @@ if (isset($_GET['success']))
 </table>
 <?php
 
+include "../controller/IController.php";
 include "../controller/ControllerManager.php";
 
 $args = array(
