@@ -176,7 +176,7 @@ final class UsuarioController implements IController
                         </form>
                     </td>
                     <td>
-                        <form action="editarUsuarios.php" method="post">
+                        <form action="editarUsuario.php" method="post">
                             <input type="hidden" name="id" value="' . $usuario->getId() . '"/>
                             <input type="hidden" name="nomecomp" value="' . $usuario->getNome() . '"/>
                             <input type="hidden" name="usuario" value="' . $usuario->getUsuario() . '"/>
