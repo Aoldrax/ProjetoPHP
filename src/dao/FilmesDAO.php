@@ -5,6 +5,7 @@ namespace dao;
 
 use dao\db\MySQLDatabase;
 use dao\db\SQLQuery;
+
 final class FilmesDAO
 {
     private static $singleton;
