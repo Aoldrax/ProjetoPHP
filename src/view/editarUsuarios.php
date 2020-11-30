@@ -1,10 +1,8 @@
 <?php
 
 include "../php/PhpUtils.php";
-include "../controller/UsuarioController.php";
 
 use php\PhpUtils;
-use controller\UsuarioController;
 session_start();
 
 $utils = PhpUtils::getSingleton();
