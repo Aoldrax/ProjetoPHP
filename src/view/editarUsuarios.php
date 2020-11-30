@@ -15,20 +15,20 @@ if (!isset($_SESSION["usuario"])) {
     return;
 }
 
-if ($utils->isNullOrEmpty(($id = $utils->tryGetValue($args, "id")))
-    || $utils->isNullOrEmpty(($nome = $utils->tryGetValue($args, "nomecomp")))
-    || $utils->isNullOrEmpty(($usuario = $utils->tryGetValue($args, "usuario")))
-    || $utils->isNullOrEmpty(($cpf = $utils->tryGetValue($args, "cpf")))
-    || $utils->isNullOrEmpty(($celular = $utils->tryGetValue($args, "celular")))
-    || $utils->isNullOrEmpty(($senha = $utils->tryGetValue($args, "senha")))
-    || $utils->isNullOrEmpty(($confir_senha = $utils->tryGetValue($args, "confsenha")))
-    || $utils->isNullOrEmpty(($email = $utils->tryGetValue($args, "email")))
-    || $utils->isNullOrEmpty(($data_nascimento = $utils->tryGetValue($args, "datanasc")))
-    || $utils->isNullOrEmpty(($estado = $utils->tryGetValue($args, "estado")))
-    || $utils->isNullOrEmpty(($cidade = $utils->tryGetValue($args, "cidade")))
-    || $utils->isNullOrEmpty(($numerodocartao = $utils->tryGetValue($args, "numerocartao")))
-    || $utils->isNullOrEmpty(($codigocartao = $utils->tryGetValue($args, "codigocartao")))
-    || $utils->isNullOrEmpty(($validadecartao = $utils->tryGetValue($args, "validadecartao")))) {
+if ($utils->isNullOrEmpty(($id = $utils->tryGetValue($_POST, "id")))
+    || $utils->isNullOrEmpty(($nome = $utils->tryGetValue($_POST, "nomecomp")))
+    || $utils->isNullOrEmpty(($usuario = $utils->tryGetValue($_POST, "usuario")))
+    || $utils->isNullOrEmpty(($cpf = $utils->tryGetValue($_POST, "cpf")))
+    || $utils->isNullOrEmpty(($celular = $utils->tryGetValue($_POST, "celular")))
+    || $utils->isNullOrEmpty(($senha = $utils->tryGetValue($_POST, "senha")))
+    || $utils->isNullOrEmpty(($confir_senha = $utils->tryGetValue($_POST, "confsenha")))
+    || $utils->isNullOrEmpty(($email = $utils->tryGetValue($_POST, "email")))
+    || $utils->isNullOrEmpty(($data_nascimento = $utils->tryGetValue($_POST, "datanasc")))
+    || $utils->isNullOrEmpty(($estado = $utils->tryGetValue($_POST, "estado")))
+    || $utils->isNullOrEmpty(($cidade = $utils->tryGetValue($_POST, "cidade")))
+    || $utils->isNullOrEmpty(($numerodocartao = $utils->tryGetValue($_POST, "numerocartao")))
+    || $utils->isNullOrEmpty(($codigocartao = $utils->tryGetValue($_POST, "codigocartao")))
+    || $utils->isNullOrEmpty(($validadecartao = $utils->tryGetValue($_POST, "validadecartao")))) {
     $utils->onRawIndexErr("Não é possível alterar os cadastros deste usuário devido a pendência de campos.", $refHome);
     return;
 }
