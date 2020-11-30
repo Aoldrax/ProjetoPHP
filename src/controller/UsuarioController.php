@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: devwarlt
- * Date: 26/11/2020
- * Time: 16:52
- */
+
 
 namespace controller;
 
