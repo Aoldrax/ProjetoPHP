@@ -19,6 +19,7 @@ if (count($_POST) === 0 || !isset($_POST["controller"])) {
     return;
 }
 
+include "../controller/IController.php";
 include "../controller/ControllerManager.php";
 
 $controller = $_POST["controller"];
