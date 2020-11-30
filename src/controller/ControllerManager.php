@@ -8,7 +8,6 @@
 
 namespace controller;
 
-include "IController.php";
 include "UsuarioController.php";
 
 final class ControllerManager
