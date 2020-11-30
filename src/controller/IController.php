@@ -10,5 +10,5 @@ namespace controller;
 
 interface IController
 {
-    function handler(array $args): void;
+    function handler(array $array): void;
 }

@@ -16,9 +16,9 @@ include "../model/UsuarioModel.php";
 include "../dao/db/SQLQuery.php";
 include "../dao/db/MySQLDatabase.php";
 include "../dao/UsuarioDAO.php";
+include "IController.php";
 
-final class UsuarioController implements IController
-{
+final class UsuarioController implements IController {
     private const REF_INDEX = "../view/";
     private const REF_HOME = "../view/home";
     private const REF_LISTAR_USR = "../view/listarUsuarios";
@@ -237,8 +237,8 @@ final class UsuarioController implements IController
             return;
         }
 
-        $model = new UsuarioModel($id, $nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao);
-        if (!UsuarioDAO::getSingleton()->alterarUsuario($model)) {
+        $model1 = new UsuarioModel($id, $nome, $usuario, $cpf, $celular, $senha, $confir_senha, $email, $data_nascimento, $estado, $cidade, $numerodocartao, $codigocartao, $validadecartao);
+        if (!UsuarioDAO::getSingleton()->alterarUsuario($model1)) {
             self::$utils->onRawIndexErr("Não foi possível alterar os dados do usuário!", self::REF_LISTAR_USR);
             return;
         }

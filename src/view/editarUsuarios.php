@@ -1,9 +1,10 @@
 <?php
 
 include "../php/PhpUtils.php";
+include "../controller/UsuarioController.php";
 
 use php\PhpUtils;
-
+use controller\UsuarioController;
 session_start();
 
 $utils = PhpUtils::getSingleton();
@@ -160,7 +161,7 @@ if ($utils->isNullOrEmpty(($id = $utils->tryGetValue($args, "id")))
         <br/>
         <br/>
         <input type="submit" class="btn btn-lg btn-success" value="Salvar"/>
-        <a href="listarUsuarios">
+        <a href="listarUsuarios.php">
             <input type="submit" class="btn btn-lg btn-danger" value="Voltar"/>
         </a>
     </form>

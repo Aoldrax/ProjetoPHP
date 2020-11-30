@@ -112,27 +112,27 @@ final class UsuarioDAO
         );
     }
 
-    public function alterarUsuario(UsuarioModel $model): bool
+    public function alterarUsuario(UsuarioModel $model1): bool
     {
         $mysql = MySQLDatabase::getSingleton();
         return $mysql->update(
             new SQLQuery(
                 "UPDATE `usuario` SET `nome` = ':nome', `usuario` = ':usuario', `cpf` = ':cpf', `celular` = ':celular', `senha` = ':senha', `confir_senha` = ':confir_senha', `email` = ':email', `data_nascimento` = ':data_nascimento', `estado` = ':estado', `cidade` = ':cidade', `numerodocartao` = ':numerodocartao', `codigocartao` = ':codigocartao', `validadecartao` = ':validadecartao' WHERE `id` = :id",
                 [
-                    ":id" => $model->getId(),
-                    ":nome" => $model->getNome(),
-                    ":usuario" => $model->getUsuario(),
-                    ":cpf" => $model->getCpf(),
-                    ":celular" => $model->getCelular(),
-                    ":senha" => $model->getSenha(),
-                    ":confir_senha" => $model->getConfirSenha(),
-                    ":email" => $model->getEmail(),
-                    ":data_nascimento" => $model->getDataNascimento(),
-                    ":estado" => $model->getEstado(),
-                    ":cidade" => $model->getCidade(),
-                    ":numerodocartao" => $model->getNumerodocartao(),
-                    ":codigocartao" => $model->getCodigocartao(),
-                    ":validadecartao" => $model->getValidadecartao()
+                    ":id" => $model1->getId(),
+                    ":nome" => $model1->getNome(),
+                    ":usuario" => $model1->getUsuario(),
+                    ":cpf" => $model1->getCpf(),
+                    ":celular" => $model1->getCelular(),
+                    ":senha" => $model1->getSenha(),
+                    ":confir_senha" => $model1->getConfirSenha(),
+                    ":email" => $model1->getEmail(),
+                    ":data_nascimento" => $model1->getDataNascimento(),
+                    ":estado" => $model1->getEstado(),
+                    ":cidade" => $model1->getCidade(),
+                    ":numerodocartao" => $model1->getNumerodocartao(),
+                    ":codigocartao" => $model1->getCodigocartao(),
+                    ":validadecartao" => $model1->getValidadecartao()
                 ]
             )
         );
