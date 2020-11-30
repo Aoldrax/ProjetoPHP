@@ -16,7 +16,6 @@ include "../model/UsuarioModel.php";
 include "../dao/db/SQLQuery.php";
 include "../dao/db/MySQLDatabase.php";
 include "../dao/UsuarioDAO.php";
-include "IController.php";
 
 final class UsuarioController implements IController {
     private const REF_INDEX = "../view/";
