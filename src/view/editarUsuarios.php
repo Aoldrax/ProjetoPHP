@@ -3,6 +3,7 @@
 include "../php/PhpUtils.php";
 
 use php\PhpUtils;
+
 session_start();
 
 $utils = PhpUtils::getSingleton();
@@ -55,7 +56,8 @@ if ($utils->isNullOrEmpty(($id = $utils->tryGetValue($_POST, "id")))
     </tr>
 </table>
 <center>
-    <h1 align="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">Editar Usuários</h1>
+    <h1 align="center" style="background-color: #e63535;width:380px; color:whitesmoke;" class="rounded-bottom">Editar
+        Usuários</h1>
     <div style="background-color: #fff; height: 1333px; width:380px;" class="rounded">
         <form action="../php/MVCRouter.php" method="post">
             <input type="hidden" name="controller" value="usuario"/>
