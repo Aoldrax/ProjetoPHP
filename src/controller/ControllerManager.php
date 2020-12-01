@@ -6,6 +6,7 @@ namespace controller;
 use Error;
 
 include "UsuarioController.php";
+include "FilmesController.php";
 
 final class ControllerManager
 {

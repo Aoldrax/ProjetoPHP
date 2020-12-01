@@ -12,9 +12,9 @@ final class UsuarioDAO
 {
     private static $singleton;
 
-    private function __construct()
-    {
-    }
+   private function __construct()
+   {
+   }
 
     public static function getSingleton(): UsuarioDAO
     {
@@ -70,7 +70,7 @@ final class UsuarioDAO
     public function listarUsuarios(): ?array
     {
         $mysql = MySQLDatabase::getSingleton();
-        $result = $mysql->select(new SQLQuery("SELECT * FROM `usuario`"));
+        $result = $mysql->select( new SQLQuery("SELECT * FROM `usuario`"));
         if ($result === null)
             return null;
 
